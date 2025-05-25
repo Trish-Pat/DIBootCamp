@@ -1,0 +1,65 @@
+print("hello world \n"*4)
+
+name="patriciah"
+
+age = 30
+shoe_size = 39
+info = f"my name is {name}, i am {age} years .{shoe_size}"
+print(info)
+
+height = int(input("what is your height"))
+print(height)
+
+if height >= 145:
+    print("you are allowed to ride")
+else:
+    print("you are not allowed to ride")
+
+for i in range(1,21):
+    print(i)
+    
+    
+"help" ,"copyright" ,"credits" "license"
+
+print("hello world" "hello world" "hello world" "hello world")
+
+print("hello world \n"*4)
+
+
+(42)
+"Hello"
+>>>("Hello")
+
+print('Hello')
+print("hello")
+"me" is "me"
+print("hello world")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
