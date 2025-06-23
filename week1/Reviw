@@ -28,7 +28,6 @@ print("hello world \n"*4)
 
 (42)
 "Hello"
->>>("Hello")
 
 print('Hello')
 print("hello")
