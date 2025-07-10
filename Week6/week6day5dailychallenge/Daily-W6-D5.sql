@@ -1,0 +1,133 @@
+------------------------------------------------------------------------
+--🌟 Task 1: Calculate the Average Budget Growth Rate for Each Production Company
+------------------------------------------------------------------------
+-- WITH movie_budgets AS (
+--     SELECT
+--         pc.company_name,
+--         m.movie_id,
+--         m.title,
+--         m.budget,
+--         m.release_date,
+--         LAG(m.budget) OVER (
+--             PARTITION BY pc.company_name
+--             ORDER BY m.release_date
+--         ) AS prev_budget
+--     FROM movie_company mc
+--     JOIN production_company pc ON mc.company_id = pc.company_id
+--     JOIN movie m ON mc.movie_id = m.movie_id
+--     WHERE m.budget > 0
+-- ),
+-- growth_rates AS (
+--     SELECT
+--         company_name,
+--         (budget - prev_budget) * 1.0 / prev_budget AS growth_rate
+--     FROM movie_budgets
+--     WHERE prev_budget > 0
+-- )
+-- SELECT
+--     company_name,
+--     ROUND(AVG(growth_rate), 4) AS avg_growth_rate,
+--     COUNT(*) AS num_growth_periods
+-- FROM growth_rates
+-- GROUP BY company_name
+-- HAVING COUNT(*) > 0
+-- ORDER BY avg_growth_rate DESC;
+
+
+--------------------------------------------------------------
+--🌟 Task 2: Determine the Most Consistently High-Rated Actor
+--------------------------------------------------------------
+
+-- WITH avg_rating AS (
+--     SELECT AVG(vote_average) AS avg_vote
+--     FROM movie
+-- ),
+-- high_rated_movies AS (
+--     SELECT movie_id
+--     FROM movie, avg_rating
+--     WHERE vote_average > avg_rating.avg_vote
+-- ),
+-- actor_high_rated_count AS (
+--     SELECT 
+--         p.person_id,
+--         p.person_name,
+--         COUNT(*) AS movie_count
+--     FROM 
+--         movie_cast mc
+--         JOIN person p ON mc.person_id = p.person_id
+--         JOIN high_rated_movies hrm ON mc.movie_id = hrm.movie_id
+--     GROUP BY 
+--         p.person_id, p.person_name
+-- ),
+-- ranked_actors AS (
+--     SELECT 
+--         person_name,
+--         movie_count,
+--         RANK() OVER (ORDER BY movie_count DESC) AS rank
+--     FROM 
+--         actor_high_rated_count
+-- )
+-- SELECT 
+--     person_name,
+--     movie_count
+-- FROM 
+--     ranked_actors
+-- WHERE 
+--     rank = 1
+
+
+--------------------------------------------------------------
+--🌟 Task 3: Calculate the Rolling Average Revenue for Each Genre--------------------------------------------------------------
+--------------------------------------------------------------
+
+-- SELECT
+--     g.genre_name,
+--     m.title,
+--     m.release_date,
+--     m.revenue,
+--     ROUND(AVG(m.revenue) OVER (
+--         PARTITION BY g.genre_name
+--         ORDER BY m.release_date
+--         ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+--     ), 2) AS rolling_avg_revenue
+-- FROM
+--     movie m
+--     JOIN movie_genres mg ON m.movie_id = mg.movie_id
+--     JOIN genre g ON mg.genre_id = g.genre_id
+-- ORDER BY
+--     g.genre_name,
+--     m.release_date;
+
+
+--------------------------------------------------------------
+--🌟 Task 4: Identify the Highest-Grossing Movie Series
+--------------------------------------------------------------
+
+
+-- WITH series_revenue AS (
+--     SELECT
+--         k.keyword_name AS series_name,
+--         SUM(m.revenue) AS total_revenue
+--     FROM
+--         movie m
+--         JOIN movie_keywords mk ON m.movie_id = mk.movie_id
+--         JOIN keyword k ON mk.keyword_id = k.keyword_id
+--     GROUP BY
+--         k.keyword_name
+-- ),
+-- ranked_series AS (
+--     SELECT
+--         series_name,
+--         total_revenue,
+--         RANK() OVER (ORDER BY total_revenue DESC) AS revenue_rank
+--     FROM
+--         series_revenue
+-- )
+-- SELECT
+--     series_name,
+--     total_revenue
+-- FROM
+--     ranked_series
+-- WHERE
+--     revenue_rank = 1;
+
