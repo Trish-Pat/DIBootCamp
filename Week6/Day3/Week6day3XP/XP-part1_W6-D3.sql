@@ -1,0 +1,56 @@
+-- 🌟 Exercise 1: DVD Rental
+--1
+-- SELECT *FROM labguage
+--2
+-- SELECT
+-- 	film.title,
+-- 	film.description,
+-- 	language.name AS language
+-- FROM
+-- 	film
+-- 	JOIN language ON film.language_id = language.language_id
+--3	
+-- SELECT
+
+-- 	film.title,
+-- 	film.description,
+-- 	language.name AS language
+-- FROM
+-- 	film
+-- 	RIGHT JOIN language ON film.language_id = language.language_id
+--4
+-- CREATE TABLE new_film (id serial PRIMARY KEY, name VARCHAR(50))
+-- INSERT INTO new_film 
+-- VALUES
+-- 	(1, 'The Matrix')
+--	(2,'Naruto')
+--5
+-- CREATE TABLE customer_review
+-- (
+-- review_id SERIAL NOT NULL PRIMARY KEY,
+-- film_id INTEGER NOT NULL REFERENCES new_film(id) ON DELETE CASCADE,
+-- language_id INTEGER NOT NULL REFERENCES language(language_id) ON DELETE CASCADE,
+-- title varchar(100) NOT NULL,
+-- score integer NOT NULL CHECK (score BETWEEN 1 AND 10),
+-- review_text TEXT NOT NULL,
+-- last_update TIMESTAMP NOT NULL
+-- )
+--6
+-- INSERT INTO customer_review 
+-- VALUES
+-- (
+-- 1,1,1, 'A Groundbreaking Sci-Fi Classic', 8, 
+-- 'The Matrix changed the way we think about action and reality. An unforgettable blend of philosophy, style, and groundbreaking special effects. Absolutely a must-watch!',
+-- '2025/06/30'
+-- ),
+-- (
+-- 2,2,3, 'An Inspiring Journey of Friendship and Growth', 7,
+-- 'Naruto is more than just a shonen anime—it’s a story about never giving up, friendship, and overcoming your own limits. Full of emotional moments and epic battles!',
+-- '2025/06/30'
+-- )
+
+--7
+	-- delete from new_film WHERE name = 'Naruto'
+--in the costumer_review table this film also was delited, because we used ON DELETE CASCADE 
+
+
