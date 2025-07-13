@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript-Enhanced Page</title>
+</head>
+<body>
+    <h1 id="main-heading">An Initial Heading</h1>
+    <p>This page includes JavaScript to dynamically alter content.</p>
+    <ul>
+        <li>First item</li>
+        <li>Second item</li>
+        <li>Third item</li>
+    </ul>
+
+    <script>
+        // This JavaScript code will run after the page loads
+        window.onload = function() {
+            const heading = document.getElementById('main-heading');
+            heading.textContent = 'This Heading Was Changed by JavaScript!';
+        };
+    </script>
+</body>
+</html>
